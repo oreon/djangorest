@@ -120,7 +120,7 @@ class CustomerBase(PersonBase):
 class CustomerOrderBase(models.Model): 
 
     
-    customer = models.ForeignKey('Customer', related_name='customerOrders')
+    customer = models.ForeignKey('Customer', related_name='customerOrders',  on_delete=models.CASCADE,)
         
     
     notes = models.TextField(null = False, blank =  True, )
@@ -145,11 +145,11 @@ class CustomerOrderBase(models.Model):
 
 class OrderItemBase(models.Model): 
 
-    customerOrder = models.ForeignKey('CustomerOrder', related_name='orderItems')
+    customerOrder = models.ForeignKey('CustomerOrder', related_name='orderItems',  on_delete=models.CASCADE)
 
     qty = models.PositiveIntegerField(null = False, blank =  True, )
     
-    product = models.ForeignKey('Product', related_name='orderItem')
+    product = models.ForeignKey('Product', related_name='orderItem',  on_delete=models.CASCADE)
         
 
     @property   
@@ -201,7 +201,7 @@ class EmployeeBase(PersonBase):
 
 class CustomerReviewBase(models.Model): 
 
-    customer = models.ForeignKey('Customer', related_name='customerReviews')
+    customer = models.ForeignKey('Customer', related_name='customerReviews',  on_delete=models.CASCADE)
         
     
     review = models.TextField(null = False, blank =  True, )

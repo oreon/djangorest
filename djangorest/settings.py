@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework', # Add this line
-    'api'
+    'api.apps.ApiConfig',
+    #'blog.apps.BlogConfig',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,14 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'djangorest.urls'
+
+SETTINGS_PATH = os.path.normpath(os.path.dirname(__file__))
+
+print(SETTINGS_PATH)
+
+TEMPLATE_DIRS = (
+    os.path.join(SETTINGS_PATH, 'templates'),
+)
 
 TEMPLATES = [
     {

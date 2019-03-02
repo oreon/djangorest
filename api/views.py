@@ -1,11 +1,8 @@
 from django.shortcuts import render
-
-# Create your views here.
-
-from rest_framework import generics, viewsets
+from rest_framework import  viewsets
 from .serializers import *
 from .models import Bucketlist
-from rest_framework import permissions
+from rest_framework import permissions, generics
 from .permissions import IsOwner
 
 class CreateView(generics.ListCreateAPIView):
