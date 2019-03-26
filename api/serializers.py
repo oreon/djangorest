@@ -51,7 +51,7 @@ class CustomerOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerOrder
         fields = '__all__'
-        extra_kwargs = {'id': {'read_only': False, 'required': True}}
+        #extra_kwargs = {'id': {'read_only': False, 'required': True}}
 
     def get_unique_together_validators(self):
         '''

@@ -4,6 +4,10 @@ from .serializers import *
 from .models import Bucketlist
 from rest_framework import permissions, generics
 from .permissions import IsOwner
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import filters
+
 
 class CreateView(generics.ListCreateAPIView):
     """This class defines the create behavior of our rest api."""
@@ -81,6 +85,23 @@ class CustomerOrderViewSet(viewsets.ModelViewSet):
 class CustomerViewSet(viewsets.ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('^firstName', '^lastName')
+
+        # GET: /api/v1/foo/1/bar/
+    @action(methods=['get'], detail= True)
+    def customerOrders(self, request, pk=None):
+        
+        customer = self.get_object()
+        qs = customer.customerOrders.all().order_by('id')
+        
+        page = self.paginate_queryset(qs)
+        if page is not None:
+            serializer = CustomerOrderSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = CustomerOrderSerializer(qs, many=True)
+        return Response(serializer.data)
 
 class OrderItemViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = OrderItem.objects.all()
